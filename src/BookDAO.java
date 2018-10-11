@@ -1,8 +1,10 @@
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BookDAO {
 
-    public static void create (String filePath, String nameBook, String autor, int yearPublication){
+    public static void create (String filePath, String nameBook, String autor, Date yearPublication){
         ArrayList<Book> books = FileManager.readFromFile(filePath);
         Book tempBook = new Book(nameBook,autor,yearPublication);
         books.add(tempBook);
@@ -33,11 +35,11 @@ public class BookDAO {
         return readByNameAutor;
     }
 
-    public static ArrayList<Book> readByNamePublication(String filePath, int yearPublication){
+    public static ArrayList<Book> readByYearPublication(String filePath, Date yearPublication){
         ArrayList<Book> tempBooks = FileManager.readFromFile(filePath);
         ArrayList<Book> readByNameBook = new ArrayList<>();
         for (Book book : tempBooks) {
-            if(book.getYearPublication() == yearPublication){
+            if(book.getYearPublication().equals(yearPublication)){
                 readByNameBook.add(book);
             }
         }
@@ -45,7 +47,7 @@ public class BookDAO {
         return readByNameBook;
     }
 
-    public static void updateById(long id, String filePath, String nameBook, String autor, int yearPublication ){
+    public static void updateById(long id, String filePath, String nameBook, String autor, Date yearPublication ){
         ArrayList<Book> tempBooks = FileManager.readFromFile(filePath);
         for (Book book : tempBooks) {
             if (book.getId() == id){

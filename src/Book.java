@@ -1,5 +1,7 @@
+import javax.xml.crypto.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 public class Book implements Serializable {
@@ -7,9 +9,9 @@ public class Book implements Serializable {
     private long id = lastBookId() + 1;
     private String nameBook;
     private String autor;
-    private int yearPublication;
+    private Date yearPublication;
 
-    public Book(String nameBook, String autor, int yearPublication) {
+    public Book(String nameBook, String autor, Date yearPublication) {
         this.nameBook = nameBook;
         this.autor = autor;
         this.yearPublication = yearPublication;
@@ -26,7 +28,7 @@ public class Book implements Serializable {
         this.autor = autor;
     }
 
-    public void setYearPublication(int yearPublication) {
+    public void setYearPublication(Date yearPublication) {
         this.yearPublication = yearPublication;
     }
 
@@ -42,7 +44,7 @@ public class Book implements Serializable {
         return autor;
     }
 
-    public int getYearPublication() {
+    public Date getYearPublication() {
         return yearPublication;
     }
 
