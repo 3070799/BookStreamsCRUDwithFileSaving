@@ -1,9 +1,10 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BooksMenu {
-
-    public static boolean exitTheProgramm = false;
+    static SimpleDateFormat format = new SimpleDateFormat("yyyy");
 
     public static void mainMenu (){
         System.out.println("ГЛАВНОЕ МЕНЮ \n" +
@@ -33,7 +34,7 @@ public class BooksMenu {
                 System.out.println(book.toString());
             }
         }else if(command.equalsIgnoreCase("6")){
-            exitTheProgramm = true;
+            System.exit(0);
         }else {
             System.out.println("Вы ввели непрвельную команду, повторите ввод");
             mainMenu();
@@ -50,8 +51,11 @@ public class BooksMenu {
         System.out.println("Название книги: ");
         nameBook = readConsoleValuve();
         System.out.println("Год публикации книги: ");
-        yearPublication = Integer.parseInt(readConsoleValuve());
-        BookDAO.create(filePath,nameBook,autor,yearPublication);
+        try {
+            BookDAO.create(filePath,nameBook,autor,format.parse(readConsoleValuve()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     private static ArrayList<Book> readMenu(String filePath){
@@ -68,7 +72,12 @@ public class BooksMenu {
             return BookDAO.readByAutor(filePath,readConsoleValuve());
         }else if(command.equalsIgnoreCase("3")){
             System.out.println("Введите год издания: ");
-            return BookDAO.readByNamePublication(filePath,Integer.parseInt(readConsoleValuve()));
+
+            try {
+                return BookDAO.readByYearPublication(filePath,format.parse(readConsoleValuve()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }else {
             System.out.println("Вы не правильно ввели значение, повторите еще раз");
             readMenu(filePath);
@@ -87,8 +96,11 @@ public class BooksMenu {
         System.out.println("Введите новое название книги: ");
         nameBook = readConsoleValuve();
         System.out.println("Введите новый год издания книги: ");
-        yearPublication = Integer.parseInt(readConsoleValuve());
-        BookDAO.updateById(id,filePath,nameBook,autor,yearPublication);
+        try {
+            BookDAO.updateById(id,filePath,nameBook,autor,format.parse(readConsoleValuve()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
     public static String readConsoleValuve(){
         Scanner sc = new Scanner(System.in);
